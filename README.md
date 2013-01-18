@@ -18,11 +18,37 @@ Or install it yourself as:
 
 ## Usage
 
+First, you need to set up your credentials:
+
 ```ruby
 Moiper.configure do |config|
   config.token = "GJUXFM6H0CJX6WTELPH1QA9QG7JUFLTS"
   config.key = "EBBH4ARIGMEP9JWAKC0YJZMDHNLSPZAOTFES5DJK"
 end
+```
+
+By default, you will make requests to the Moip's production API. You can enable the sandbox environment by setting the `sandbox` configuration:
+
+```ruby
+Moiper.configure do |config|
+  config.sandbox = true
+end
+```
+
+To make a payment request:
+
+```ruby
+payment = Moiper::Payment.new(
+  :description      => "A chair",
+  :price            => 1.99,
+  :id               => "some unique id",
+  :return_url       => "http://example.org/thank_you",
+  :notification_url => "http://example.org/moip/notification"
+)
+
+response = payment.checkout
+
+redirect_to response.checkout_url if payment.success?
 ```
 
 ## Contributing
