@@ -51,6 +51,10 @@ response = payment.checkout
 redirect_to response.checkout_url if payment.success?
 ```
 
+## Disclaimer
+
+This gem is being developed in a workshop-like manner, during the trainee training program at Tagview, so the students can understand concepts such as open source development, TDD, API integration and documentation.
+
 ## Contributing
 
 1. Fork it
