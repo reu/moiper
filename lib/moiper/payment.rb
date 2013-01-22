@@ -49,5 +49,10 @@ module Moiper
 
       builder.to_xml
     end
+
+    def checkout
+      request = Request.new
+      request.process(to_xml)
+    end
   end
 end

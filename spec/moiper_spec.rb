@@ -1,4 +1,4 @@
-require "moiper"
+require "spec_helper"
 
 describe Moiper do
   describe ".configure" do
@@ -26,10 +26,6 @@ describe Moiper do
   end
 
   describe ".sandbox?" do
-    it "is false by default" do
-      Moiper.sandbox?.should be_false
-    end
-
     it "is true when you set sandbox configuration true" do
       Moiper.configure do |config|
         config.sandbox = true

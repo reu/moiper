@@ -1,4 +1,4 @@
-require "moiper"
+require "spec_helper"
 
 describe Moiper::Payment do
   describe "#initialize" do
