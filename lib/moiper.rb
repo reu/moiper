@@ -2,6 +2,7 @@ require "moiper/version"
 require "moiper/payment"
 require "moiper/request"
 require "moiper/response"
+require "moiper/notification"
 
 module Moiper
   API_ENTRYPOINTS = {
