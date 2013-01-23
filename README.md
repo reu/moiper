@@ -1,6 +1,6 @@
 # Moiper
 
-Moip payment service integration library.
+[Moip payment service](http://moip.com.br/) integration library.
 
 ## Installation
 
