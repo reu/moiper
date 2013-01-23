@@ -48,7 +48,7 @@ payment = Moiper::Payment.new(
 
 response = payment.checkout
 
-redirect_to response.checkout_url if payment.success?
+redirect_to response.checkout_url if response.success?
 ```
 
 ## Disclaimer
