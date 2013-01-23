@@ -51,6 +51,25 @@ response = payment.checkout
 redirect_to response.checkout_url if response.success?
 ```
 
+### Notifications
+
+Moip will notify your application with a POST, you can see more information at this url: http://labs.moip.com.br/referencia/nasp/
+
+```ruby
+class OrdersController < ApplicationController
+  include Moiper::NotificationControllerHelper
+
+  def confirm
+    moip_notification do |notification|
+      # Here you can update your database with updated information from Moip
+      @order = Order.find_by_unique_identifier(notification.id)
+      @order.update_attribute :status, notification.payment_status
+      @order.save
+    end
+  end
+end
+```
+
 ## Disclaimer
 
 This gem is being developed in a workshop-like manner, during the trainee training program at Tagview, so the students can understand concepts such as open source development, TDD, API integration and documentation.
