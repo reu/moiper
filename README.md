@@ -35,7 +35,7 @@ Moiper.configure do |config|
 end
 ```
 
-To make a payment request:
+Then, you can request a new payment authorization:
 
 ```ruby
 payment = Moiper::Payment.new(
@@ -48,12 +48,18 @@ payment = Moiper::Payment.new(
 
 response = payment.checkout
 
-redirect_to response.checkout_url if response.success?
+if response.success?
+  redirect_to response.checkout_url
+else
+  render :text => response.errors.to_sentence
+end
 ```
+
+You need to redirect your user to the url returned by `response.checkout_url`. After the user accepts or rejects your payment request, he will be redirected to the `return_url` you specified on the payment. In case of possible errors during the payment request phase, you can access then through the `response.errors` method.
 
 ### Notifications
 
-Moip will notify your application with a POST, you can see more information at this url: http://labs.moip.com.br/referencia/nasp/
+Moip will notify your application about order updates through [NASP](http://labs.moip.com.br/referencia/nasp/). Moiper provides a Rails controller helper to you can easily intercept these notifications with the `moip_notification` method.
 
 ```ruby
 class OrdersController < ApplicationController
@@ -61,14 +67,59 @@ class OrdersController < ApplicationController
 
   def confirm
     moip_notification do |notification|
-      # Here you can update your database with updated information from Moip
+      # Here you can update your database with updated information.
+      # Ex:
       @order = Order.find_by_unique_identifier(notification.id)
       @order.update_attribute :status, notification.payment_status
       @order.save
+
+      # Moip will recognize the request as successfully if the statuses
+      # are 200, 201, 202, 203, 204, 205, 206 or 207.
+      head 200
     end
   end
 end
 ```
+
+#### Payment Status
+
+Following are the possible payment statuses returned by the `Moip::Notification#payment_status`.
+
+* `authorized`
+* `started`
+* `payment_form_printed`
+* `finished`
+* `canceled`
+* `under_analysis`
+* `returned`
+* `reimbursed`
+
+#### Payment Methods
+
+Following are the possible financial institutions returned by the `Moip::Notification#payment_method`.
+
+* `payment_form`
+* `credit_card`
+* `debit`
+* `debit_card`
+* `financing`
+* `moip_account`
+
+#### Financial Institution
+
+Following are the possible financial institutions returned by the `Moip::Notification#financial_institution`.
+
+* MoIP
+* Visa
+* AmericanExpress
+* Mastercard
+* Diners
+* BancoDoBrasil
+* Bradesco
+* Itau
+* Hipercard
+* Paggo
+* Banrisul
 
 ## Disclaimer
 
