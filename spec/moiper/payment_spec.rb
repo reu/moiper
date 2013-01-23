@@ -104,5 +104,20 @@ describe Moiper::Payment do
 
     it { doc.at_css("InstrucaoUnica > URLRetorno").text.should eq "http://example.org/thank_you" }
     it { doc.at_css("InstrucaoUnica > URLNotificacao").text.should eq "http://example.org/moip/notification" }
+
+    context "when no id is informed" do
+      before { payment.id = nil }
+      it { doc.at_css("InstrucaoUnica > IdProprio").should be_nil }
+    end
+
+    context "when no notification_url is informed" do
+      before { payment.notification_url = nil }
+      it { doc.at_css("InstrucaoUnica > URLNotificacao").should be_nil }
+    end
+
+    context "when no return_url is informed" do
+      before { payment.return_url = nil }
+      it { doc.at_css("InstrucaoUnica > URLRetorno").should be_nil }
+    end
   end
 end

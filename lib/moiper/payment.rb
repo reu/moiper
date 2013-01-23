@@ -35,14 +35,14 @@ module Moiper
         xml.EnviarInstrucao {
           xml.InstrucaoUnica {
             xml.Razao description
-            xml.IdProprio id
+            xml.IdProprio id if id
 
             xml.Valores {
               xml.Valor price, :moeda => "BRL"
             }
 
-            xml.URLNotificacao notification_url
-            xml.URLRetorno return_url
+            xml.URLNotificacao notification_url if notification_url
+            xml.URLRetorno return_url if return_url
           }
         }
       end
