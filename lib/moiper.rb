@@ -3,6 +3,7 @@ require "moiper/payment"
 require "moiper/request"
 require "moiper/response"
 require "moiper/notification"
+require "moiper/railtie" if defined? Rails
 
 module Moiper
   API_ENTRYPOINTS = {
