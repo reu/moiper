@@ -1,6 +1,6 @@
 # Moiper
 
-[![Build Status](https://secure.travis-ci.org/reu/moiper.png)](http://travis-ci.org/reu/moiper)
+[![Build Status](https://travis-ci.org/reu/moiper.png?branch=master)](https://travis-ci.org/reu/moiper)
 
 [Moip payment service](http://moip.com.br/) integration library.
 
