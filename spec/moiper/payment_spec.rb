@@ -82,6 +82,8 @@ describe Moiper::Payment do
       Moiper::Payment.new(
         :description      => "A chair",
         :price            => 1.99,
+        :accretion        => 0.5,
+        :deduction        => 0.3,
         :id               => "some unique id",
         :return_url       => "http://example.org/thank_you",
         :notification_url => "http://example.org/moip/notification"
@@ -99,8 +101,15 @@ describe Moiper::Payment do
     it { doc.at_css("InstrucaoUnica > URLNotificacao").should_not be_nil }
 
     it { doc.at_css("InstrucaoUnica > IdProprio").text.should eq "some unique id"}
+
     it { doc.at_css("Valores > Valor").text.should eq "1.99"}
     it { doc.at_css("Valores > Valor").attributes["moeda"].value.should eq "BRL"}
+
+    it { doc.at_css("Valores > Acrescimo").text.should eq "0.5"}
+    it { doc.at_css("Valores > Acrescimo").attributes["moeda"].value.should eq "BRL"}
+
+    it { doc.at_css("Valores > Deducao").text.should eq "0.3"}
+    it { doc.at_css("Valores > Deducao").attributes["moeda"].value.should eq "BRL"}
 
     it { doc.at_css("InstrucaoUnica > URLRetorno").text.should eq "http://example.org/thank_you" }
     it { doc.at_css("InstrucaoUnica > URLNotificacao").text.should eq "http://example.org/moip/notification" }

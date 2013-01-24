@@ -12,6 +12,12 @@ module Moiper
     # @return [Float] the amount to be billed from the user
     attr_accessor :price
 
+    # @return [Float] the amount to be increased from the final price
+    attr_accessor :accretion
+
+    # @return [Float] the amount to be deducted from the final price
+    attr_accessor :deduction
+
     # @return [String] the URL where the user will be redirected after he finishes the
     #   payment process.
     attr_accessor :return_url
@@ -25,6 +31,8 @@ module Moiper
     # @option options [String] :description {#description}
     # @option options [String, #to_s] :id {#id}
     # @option options [#to_f] :price {#price}
+    # @option options [#to_f] :accretion {#accretion}
+    # @option options [#to_f] :deduction {#deduction}
     # @option options [String, #to_s] :return_url {#return_url}
     # @option options [String, #to_s] :notification_url {#notification_url}
     #
@@ -49,6 +57,8 @@ module Moiper
 
             xml.Valores {
               xml.Valor price, :moeda => "BRL"
+              xml.Acrescimo accretion, :moeda => "BRL" if accretion
+              xml.Deducao deduction, :moeda => "BRL" if deduction
             }
 
             xml.URLNotificacao notification_url if notification_url
