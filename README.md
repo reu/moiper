@@ -81,6 +81,14 @@ class OrdersController < ApplicationController
 end
 ```
 
+If you are not using Rails, you can manually instantiate a Moiper::Notification class by passing the POST parameters received from Moip's request.
+
+```ruby
+post "/moip/callback" do
+  notification = Moiper::Notification.new(params)
+end
+```
+
 #### Payment Status
 
 Following are the possible payment statuses returned by the `Moip::Notification#payment_status`.
