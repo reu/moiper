@@ -1,0 +1,7 @@
+language: ruby
+script: bundle exec rspec -bfd spec
+rvm:
+  - 1.9.2
+  - 1.9.3
+  - jruby
+  - rbx-19mode
