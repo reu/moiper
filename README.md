@@ -59,7 +59,7 @@ You need to redirect your user to the url returned by `response.checkout_url`. A
 
 ### Notifications
 
-Moip will notify your application about order updates through [NASP](http://labs.moip.com.br/referencia/nasp/). Moiper provides a Rails controller helper to you can easily intercept these notifications with the `moip_notification` method.
+Moip will notify your application about order updates through [NASP](http://labs.moip.com.br/referencia/nasp/). Moiper provides a Rails controller helper so you can easily intercept these notifications with the `moip_notification` method.
 
 ```ruby
 class OrdersController < ApplicationController
