@@ -34,8 +34,7 @@ describe Moiper::Request do
     end
 
     it "has the correct user agent" do
-      headers = Hash[subject.each_capitalized.to_a]
-      headers["User-Agent"].should eq "Moiper/#{Moiper::VERSION}"
+      subject.get_fields("user-agent")[0].should eq "Moiper/#{Moiper::VERSION}"
     end
   end
 end
