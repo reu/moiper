@@ -6,31 +6,47 @@ require "moiper/notification"
 require "moiper/railtie" if defined? Rails
 
 module Moiper
+  # The available Moip entrypoints
+  # @see http://labs.moip.com.br/referencia/autenticacao_api/#ambientes
+  #   The Moip's official documentation regarding its entrypoints
   API_ENTRYPOINTS = {
     :sandbox    => "https://desenvolvedor.moip.com.br/sandbox/",
     :production => "https://www.moip.com.br/"
   }
 
   class << self
-    # Set Moip's API token
+    # @!group Configurable options
+
+    # @return [String] Moip's API token
     attr_accessor :token
 
-    # Set Moip's API key
+    # @return [String] Moip's API key
     attr_accessor :key
 
     # Define if requests should be made against Moip's sandbox
     # environment. This is specially usefull when running
-    # on development or test mode. Default is false.
+    # on development or test mode. Default is false
     #
-    #  Moiper.sandbox = true
+    # @see http://labs.moip.com.br/referencia/autenticacao_api/#sandbox
+    #   Moip's official documentation regarding sandbox activation
     #
+    # @example
+    #   Moiper.sandbox = true
+    #
+    # @return [Boolean] current sandbox state
     attr_accessor :sandbox
 
-    # Configure Moiper options.
+    # @!endgroup
+
+    # Configure Moiper's options
     #
-    #  Moiper.configure do |config|
-    #    config.sandbox = true
-    #  end
+    # @yieldparam config [Moiper]
+    # @return [void]
+    #
+    # @example
+    #   Moiper.configure do |config|
+    #     config.sandbox = true
+    #   end
     #
     def configure(&block)
       yield self
@@ -41,7 +57,7 @@ module Moiper
       sandbox == true
     end
 
-    # Returns the Moip API entrypoint based on the current environment
+    # @return [String] the Moip API entrypoint based on the current environment
     def api_entrypoint
       sandbox? ? API_ENTRYPOINTS[:sandbox] : API_ENTRYPOINTS[:production]
     end

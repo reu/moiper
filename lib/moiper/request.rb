@@ -5,13 +5,17 @@ module Moiper
   class Request
     CA_FILE = File.expand_path(File.dirname(__FILE__)) + "/cacert.pem"
 
-    attr_reader :response
-
+    # Process a given payload
+    # @param payload [String]
+    # @return [Response] the response from Moip
     def process(payload)
-      @response = post(payload)
-      Response.new(@response.body)
+      response = post(payload)
+      Response.new(response.body)
     end
 
+    # @!group HTTP handling
+
+    # @return [Net::HTTP::Session] the http session client
     def client
       @client ||= Net::HTTP.new(uri.host, uri.port).tap do |http|
         http.use_ssl = true
@@ -20,6 +24,9 @@ module Moiper
       end
     end
 
+    # @return [Net::HTTP::Post] the http POST request already
+    #   configured with the right agent, content type and
+    #   basic authentication headers
     def request
       @request ||= Net::HTTP::Post.new(uri.path).tap do |request|
         request.basic_auth Moiper.token, Moiper.key
@@ -27,6 +34,8 @@ module Moiper
         request["User-Agent"] = "Moiper/#{Moiper::VERSION}"
       end
     end
+
+    # @!endgroup
 
     private
 
@@ -39,6 +48,8 @@ module Moiper
       @uri ||= URI(Moiper.api_entrypoint + path)
     end
 
+    # @api private
+    # @return [String] path where the request should be made
     def path
       "ws/alpha/EnviarInstrucao/Unica"
     end
